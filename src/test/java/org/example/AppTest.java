@@ -19,4 +19,14 @@ public class AppTest extends BaseTest {
     searchBox.sendKeys(Keys.ENTER);
   }
 
+  @Test
+  public void loginTest() {
+    driver.navigate().to("http://localhost:8055/litecart/admin/");
+    WebElement username = driver.findElement(By.name("username"));
+    username.sendKeys("user");
+    WebElement password = driver.findElement(By.name("password"));
+    password.sendKeys("password");
+    WebElement login = driver.findElement(By.name("login"));
+    login.click();
+  }
 }
