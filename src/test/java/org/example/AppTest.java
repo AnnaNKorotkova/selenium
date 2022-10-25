@@ -136,6 +136,41 @@ public class AppTest extends BaseTest {
         System.out.println(k);
     }
 
+    @Test
+    public void alfabetTimeZone() {
+        driver.navigate().to("http://localhost:8055/litecart/admin/");
+        WebElement username = driver.findElement(By.name("username"));
+        username.sendKeys("admin");
+        WebElement password = driver.findElement(By.name("password"));
+        password.sendKeys("admin");
+        WebElement login = driver.findElement(By.name("login"));
+        login.click();
+        driver.navigate().to("http://localhost:8055/litecart/admin/?app=geo_zones&doc=geo_zones");
+
+        List<WebElement> listElement = driver.findElements(
+                By.cssSelector("form[name=geo_zones_form] table tr"));
+        int numberOfListElements = listElement.size();
+        var listZone = new ArrayList<String>();
+        for (int i = 2; i < numberOfListElements; i++) {
+            List<WebElement> country = driver.findElements(
+                    By.cssSelector(
+                            "form[name=geo_zones_form] table tr:nth-child(" + i + ") td:nth-child(3)"));
+            if(country.size()>0){
+                listZone.add(country.get(0).getText());
+            }
+
+        }
+        int k = 0;
+        var sortedList = new ArrayList<>(listZone);
+        sortedList.sort(String::compareToIgnoreCase);
+        for (int i = 0; i < listZone.size(); i++) {
+            if (!listZone.get(i).equals(sortedList.get(i))) {
+                k++;
+            }
+        }
+        System.out.println(k);
+    }
+
 
     @Test
     public void checkSticker() {
