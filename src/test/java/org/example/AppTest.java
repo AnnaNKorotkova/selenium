@@ -4,7 +4,6 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -122,7 +121,8 @@ public class AppTest extends BaseTest {
                     }
                 }
                 System.out.println(t);
-                driver.navigate().to("http://localhost:8055/litecart/admin/?app=countries&doc=countries");
+                driver.navigate()
+                        .to("http://localhost:8055/litecart/admin/?app=countries&doc=countries");
             }
         }
         int k = 0;
@@ -154,8 +154,9 @@ public class AppTest extends BaseTest {
         for (int i = 2; i < numberOfListElements; i++) {
             List<WebElement> country = driver.findElements(
                     By.cssSelector(
-                            "form[name=geo_zones_form] table tr:nth-child(" + i + ") td:nth-child(3)"));
-            if(country.size()>0){
+                            "form[name=geo_zones_form] table tr:nth-child(" + i
+                                    + ") td:nth-child(3)"));
+            if (country.size() > 0) {
                 listZone.add(country.get(0).getText());
             }
 
@@ -177,13 +178,14 @@ public class AppTest extends BaseTest {
         driver.navigate().to("http://localhost:8055/litecart/en/rubber-ducks-c-1/");
         int k = 0;
         List<WebElement> listElement = driver.findElements(
-                By.cssSelector("div[class=content] ul.listing-wrapper.products a.link"));
+                By.cssSelector("div[class=content] li.product"));
         for (int i = 0; i < listElement.size(); i++) {
-            if (isElementPresent(driver, By.cssSelector("div[class|=sticker]"))) {
+            if (!isElementPresent(driver, By.cssSelector(
+                    "div[class=content] li.product:nth-child(" + i + ") div.sticker"))) {
                 k++;
             }
         }
-        Assertions.assertEquals(k, listElement.size());
+        System.out.println(k);
     }
 
     boolean isElementPresent(WebDriver driver, By locator) {
