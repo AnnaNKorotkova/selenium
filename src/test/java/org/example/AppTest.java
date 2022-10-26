@@ -148,18 +148,38 @@ public class AppTest extends BaseTest {
         driver.navigate().to("http://localhost:8055/litecart/admin/?app=geo_zones&doc=geo_zones");
 
         List<WebElement> listElement = driver.findElements(
-                By.cssSelector("form[name=geo_zones_form] table tr"));
+                By.cssSelector("table[class=dataTable] tr"));
         int numberOfListElements = listElement.size();
         var listZone = new ArrayList<String>();
         for (int i = 2; i < numberOfListElements; i++) {
             List<WebElement> country = driver.findElements(
                     By.cssSelector(
-                            "form[name=geo_zones_form] table tr:nth-child(" + i
-                                    + ") td:nth-child(3)"));
+                            "table[class=dataTable] tr:nth-child(" + i
+                                    + ") td:nth-child(3) a"));
             if (country.size() > 0) {
-                listZone.add(country.get(0).getText());
+                country.get(0).click();
             }
+            List<WebElement> countryClick = driver.findElements(
+                    By.cssSelector(
+                            "table[class=dataTable] tr"));
+            for (int j = 1; j < countryClick.size() + 1 + 1; j++) {
+                List<WebElement> options = driver.findElements(
+                        By.cssSelector(
+                                "table[class=dataTable] tr:nth-child(" + j
+                                        + ") td:nth-child(3) select option"));
+                for (int n = 0; n < options.size(); n++) {
+                    List<WebElement> elements = driver.findElements(
+                            By.cssSelector(
+                                    "table[class=dataTable] tr:nth-child(" + j
+                                            + ") td:nth-child(3) select option:nth-child(" + n
+                                            + ")"));
+                    if (elements.size() > 0 && elements.get(0).isSelected()) {
+                        listZone.add(elements.get(0).getText());
+                    }
+                }
 
+
+            }
         }
         int k = 0;
         var sortedList = new ArrayList<>(listZone);
