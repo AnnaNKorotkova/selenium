@@ -84,7 +84,6 @@ public class AppTest extends BaseTest {
                 By.cssSelector("table[class=dataTable] tr"));
         int numberOfListElements = listElement.size();
         var listCountry = new ArrayList<String>();
-        var listZone = new ArrayList<String>();
         for (int i = 2; i < numberOfListElements; i++) {
             List<WebElement> country = driver.findElements(
                     By.cssSelector(
@@ -103,17 +102,18 @@ public class AppTest extends BaseTest {
                 element.click();
                 List<WebElement> elements = driver.findElements(
                         By.cssSelector("table[id=table-zones] tr"));
+                var listZone = new ArrayList<String>();
                 for (int j = 2; j < elements.size(); j++) {
                     List<WebElement> countryZone = driver.findElements(
                             By.cssSelector(
-                                    "table[id=table-zones] tr:nth-child(" + i
+                                    "table[id=table-zones] tr:nth-child(" + j
                                             + ") td:nth-child(3)"));
                     if (countryZone.size() > 0) {
-                        listZone.add(country.get(0).getText());
+                        listZone.add(countryZone.get(0).getText());
                     }
                 }
                 int t = 0;
-                var sortedListTimeZone = new ArrayList<>(listCountry);
+                var sortedListTimeZone = new ArrayList<>(listZone);
                 sortedListTimeZone.sort(String::compareToIgnoreCase);
                 for (int n = 0; n < listZone.size(); n++) {
                     if (!listZone.get(n).equals(sortedListTimeZone.get(n))) {
