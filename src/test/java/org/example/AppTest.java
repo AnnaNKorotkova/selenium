@@ -11,7 +11,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.Color;
 
 /**
  * Unit test for simple App.
@@ -203,9 +202,13 @@ public class AppTest extends BaseTest {
         List<WebElement> listElement = driver.findElements(
                 By.cssSelector("div[class=content] li.product"));
         for (int i = 0; i < listElement.size(); i++) {
+            List<WebElement> elements = driver.findElements(By.cssSelector(
+                    "div[class=content] li.product:nth-child(" + i + ") div.sticker"));
             if (!isElementPresent(driver, By.cssSelector(
-                    "div[class=content] li.product:nth-child(" + i + ") div.sticker"))) {
+                    "div[class=content] li.product:nth-child(" + i + ") div.sticker"))
+                    || elements.size() > 1) {
                 k++;
+
             }
         }
         System.out.println(k);
@@ -216,26 +219,29 @@ public class AppTest extends BaseTest {
         driver.navigate().to("http://localhost:8055/litecart/en/");
         List<WebElement> listElement = driver.findElements(
                 By.cssSelector("div[id=box-campaigns] div.content ul li a.link"));
-        for (int i = 1; i < listElement.size()+1; i++) {
-        var mapFirstPage = new HashMap<String, String>();
+        for (int i = 1; i < listElement.size() + 1; i++) {
+            var mapFirstPage = new HashMap<String, String>();
             List<WebElement> elements = driver.findElements(
                     By.cssSelector(
                             "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i + ")"));
-            if(elements.size()>0){
-                mapFirstPage.put("name",driver.findElement(
+            if (elements.size() > 0) {
+                mapFirstPage.put("name", driver.findElement(
                         By.cssSelector(
-                                "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i + ") div.name")).getText());
-                mapFirstPage.put("sPrice",driver.findElement(
+                                "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i
+                                        + ") div.name")).getText());
+                mapFirstPage.put("sPrice", driver.findElement(
                         By.cssSelector(
-                                "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i + ") div.price-wrapper s")).getText());
+                                "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i
+                                        + ") div.price-wrapper s")).getText());
                 String colorS = driver.findElement(
                         By.cssSelector(
                                 "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i
                                         + ") div.price-wrapper s")).getCssValue("color");
                 var colorSCheck = Objects.equals(colorS, "rgb(119, 119, 119)");
-                mapFirstPage.put("strongPrice",driver.findElement(
+                mapFirstPage.put("strongPrice", driver.findElement(
                         By.cssSelector(
-                                "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i + ") div.price-wrapper strong")).getText());
+                                "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i
+                                        + ") div.price-wrapper strong")).getText());
                 String colorStrong = driver.findElement(
                         By.cssSelector(
                                 "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i
@@ -257,15 +263,18 @@ public class AppTest extends BaseTest {
 
                 driver.findElements(
                         By.cssSelector(
-                                "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i + ")")).get(0).click();
+                                "div[id=box-campaigns] div.content ul li a.link:nth-child(" + i
+                                        + ")")).get(0).click();
                 boolean c1 = mapFirstPage.get("name").equals(driver.findElement(
                         By.cssSelector("div[id=box-product] div h1.title")).getText());
 
                 boolean c2 = mapFirstPage.get("sPrice").equals(driver.findElement(
-                        By.cssSelector("div[id=box-product] div.content div.price-wrapper s")).getText());
+                                By.cssSelector("div[id=box-product] div.content div.price-wrapper s"))
+                        .getText());
 
                 boolean c3 = mapFirstPage.get("strongPrice").equals(driver.findElement(
-                        By.cssSelector("div[id=box-product] div.content div.price-wrapper strong")).getText());
+                                By.cssSelector("div[id=box-product] div.content div.price-wrapper strong"))
+                        .getText());
 
                 String colorS1 = driver.findElement(
                         By.cssSelector(
@@ -273,17 +282,21 @@ public class AppTest extends BaseTest {
                 var colorSCheck1 = Objects.equals(colorS1, "rgb(102, 102, 102)");
 
                 String colorStrong1 = driver.findElement(
-                        By.cssSelector("div[id=box-product] div.content div.information div.price-wrapper strong")).getCssValue("color");
+                                By.cssSelector(
+                                        "div[id=box-product] div.content div.information div.price-wrapper strong"))
+                        .getCssValue("color");
                 var colorStrongCheck1 = Objects.equals(colorStrong1, "rgb(204, 0, 0)");
 
                 String cssValue1 = driver.findElement(
-                        By.cssSelector(
-                                "div[id=box-product] div.content div.information div.price-wrapper s")).getCssValue("text-decoration");
+                                By.cssSelector(
+                                        "div[id=box-product] div.content div.information div.price-wrapper s"))
+                        .getCssValue("text-decoration");
                 boolean equalsTextDecorationS1 = cssValue1
                         .equals("line-through rgb(102, 102, 102)");
                 String cssValueFont1 = driver.findElement(
-                        By.cssSelector(
-                                "div[id=box-product] div.content div.information div.price-wrapper strong")).getCssValue("font-weight");
+                                By.cssSelector(
+                                        "div[id=box-product] div.content div.information div.price-wrapper strong"))
+                        .getCssValue("font-weight");
                 boolean equalsTextFontWeightStrong1 = cssValueFont1
                         .equals("700");
                 System.out.println("Check color in main page: " + colorSCheck);
@@ -309,5 +322,4 @@ public class AppTest extends BaseTest {
             return false;
         }
     }
-
 }
