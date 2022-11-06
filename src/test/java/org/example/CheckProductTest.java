@@ -48,7 +48,7 @@ public class CheckProductTest extends BaseTest {
             String cssValueFont = listElement.get(i).findElement(
                     By.cssSelector("div.price-wrapper strong")).getCssValue("font-weight");
             boolean equalsTextFontWeightStrong = cssValueFont
-                    .equals("900");
+                    .equals("bold") ||cssValueFont.equals("900");
 
             listElement.get(i).click();
             boolean c1 = mapFirstPage.get("name").equals(driver.findElement(
