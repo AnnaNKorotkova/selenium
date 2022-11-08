@@ -24,14 +24,10 @@ public class BucketTest extends BaseTest {
         for (int i = 0; i < elementList.size(); i++) {
             elementList.get(i).click();
         }
-        int afterDelete = Integer.parseInt(driver.findElement(
-                By.xpath("//div[@id='cart']/a/span[@class='quantity']")).getText());
-
         driver.findElement(
                 By.xpath("//p/a")).click();
         int beforeDelete = Integer.parseInt(driver.findElement(
                 By.xpath("//div[@id='cart']/a/span[@class='quantity']")).getText());
-        System.out.println(afterDelete);
         System.out.println(beforeDelete);
     }
 
