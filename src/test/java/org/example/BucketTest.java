@@ -38,6 +38,5 @@ public class BucketTest extends BaseTest {
         driver.findElement(
                 By.xpath("//button[@name='add_cart_product']")).click();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-
     }
 }
