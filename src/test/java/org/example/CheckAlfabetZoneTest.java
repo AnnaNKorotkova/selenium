@@ -25,49 +25,33 @@ public class CheckAlfabetZoneTest extends BaseTest {
         driver.navigate().to("http://localhost:8055/litecart/admin/?app=geo_zones&doc=geo_zones");
 
         List<WebElement> listElement = driver.findElements(
-                By.cssSelector("table[class=dataTable] tr"));
+                By.xpath("//table[@class='dataTable']/tbody/tr[@class='row']/td[3]/a"));
         int numberOfListElements = listElement.size();
+        var map = new HashMap<String , Integer>();
+        for (int i = 0; i < numberOfListElements; i++) {
         var listZone = new ArrayList<String>();
-        for (int i = 2; i < numberOfListElements; i++) {
-            List<WebElement> country = driver.findElements(
-                    By.cssSelector(
-                            "table[class=dataTable] tr:nth-child(" + i
-                                    + ") td:nth-child(3) a"));
-            if (country.size() > 0) {
-                country.get(0).click();
+            String nameCountry = driver.findElements(
+                            By.xpath("//table[@class='dataTable']/tbody/tr[@class='row']/td[3]/a")).get(i)
+                    .getText();
+            driver.findElements(
+                    By.xpath("//table[@class='dataTable']/tbody/tr[@class='row']/td[3]/a")).get(i).click();
+            List<WebElement> zones = driver.findElements(By.xpath(
+                    "//table[@class='dataTable']/tbody/tr/td[3]/select/option[@selected='selected']"));
+            for (int j=0; j<zones.size(); j++){
+                listZone.add(zones.get(j).getText());
             }
-            List<WebElement> countryClick = driver.findElements(
-                    By.cssSelector(
-                            "table[class=dataTable] tr"));
-            for (int j = 1; j < countryClick.size() + 1 + 1; j++) {
-                List<WebElement> options = driver.findElements(
-                        By.cssSelector(
-                                "table[class=dataTable] tr:nth-child(" + j
-                                        + ") td:nth-child(3) select option"));
-                for (int n = 0; n < options.size(); n++) {
-                    List<WebElement> elements = driver.findElements(
-                            By.cssSelector(
-                                    "table[class=dataTable] tr:nth-child(" + j
-                                            + ") td:nth-child(3) select option:nth-child(" + n
-                                            + ")"));
-                    if (elements.size() > 0 && elements.get(0).isSelected()) {
-                        if (!listZone.contains(elements.get(0).getText())) {
-                            listZone.add(elements.get(0).getText());
-
-                        }
-                    }
+            int k=0;
+            var sortedList = new ArrayList<>(listZone);
+            sortedList.sort(String::compareToIgnoreCase);
+            for (int n = 0; n < listZone.size(); n++) {
+                if (!listZone.get(n).equals(sortedList.get(n))) {
+                    k++;
                 }
             }
+            map.put(nameCountry, k);
+            driver.navigate().to("http://localhost:8055/litecart/admin/?app=geo_zones&doc=geo_zones");
         }
-        int k = 0;
-        var sortedList = new ArrayList<>(listZone);
-        sortedList.sort(String::compareToIgnoreCase);
-        for (int i = 0; i < listZone.size(); i++) {
-            if (!listZone.get(i).equals(sortedList.get(i))) {
-                k++;
-            }
-        }
-        System.out.println(k);
+        System.out.println(map);
     }
 }
 
