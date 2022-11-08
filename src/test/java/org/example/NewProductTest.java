@@ -25,7 +25,11 @@ public class NewProductTest extends BaseTest {
         username.sendKeys("admin");
         WebElement password = driver.findElement(By.name("password"));
         password.sendKeys("admin");
-        driver.findElement(By.name("login")).click();;
+        driver.findElement(By.name("login")).click();
+        driver.navigate()
+                .to("http://localhost:8055/litecart/admin/?app=catalog&doc=catalog");
+        int before = driver.findElements(
+                By.xpath("//table[@class='dataTable']/tbody/tr[@class='row']")).size();
         driver.navigate()
                 .to("http://localhost:8055/litecart/admin/?category_id=0&app=catalog&doc=edit_product");
 
@@ -65,8 +69,9 @@ public class NewProductTest extends BaseTest {
 
         driver.navigate()
                 .to("http://localhost:8055/litecart/admin/?app=catalog&doc=catalog");
-        int size = driver.findElements(By.xpath("//a[contains(text(), 'Boomer')]")).size();
-        System.out.println("size: "+ size );
+        int after = driver.findElements(
+                By.xpath("//table[@class='dataTable']/tbody/tr[@class='row']")).size();
+        System.out.println("before: "+ before +" after: "+ after );
     }
 }
 
