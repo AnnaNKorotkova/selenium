@@ -45,7 +45,6 @@ public class BucketTest extends BaseTest {
                 By.xpath("//button[@name='add_cart_product']")).click();
         int parseInt = Integer.parseInt(driver.findElement(
                 By.xpath("//div[@id='cart']/a/span[@class='quantity']")).getText());
-        ;
         while (parseInt != number + 1) {
             parseInt = Integer.parseInt(driver.findElement(
                     By.xpath("//div[@id='cart']/a/span[@class='quantity']")).getText());
