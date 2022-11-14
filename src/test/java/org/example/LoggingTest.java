@@ -30,6 +30,9 @@ public class LoggingTest extends BaseTest {
             List<LogEntry> logEntries = decorated.manage().logs().get("browser").getAll();
             if (logEntries.size() > 0) {
                 k++;
+                for (int j = 0; i < logEntries.size(); j++){
+                    System.out.println(logEntries.get(j).getLevel()+": "+ logEntries.get(j).getMessage());
+                }
             }
             decorated.navigate().back();
         }
