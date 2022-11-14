@@ -13,7 +13,9 @@ public class BucketPage extends Page{
         PageFactory.initElements(driver, this);
     }
 
-
+    public void refreshBucket() {
+        driver.navigate().refresh();
+    }
     @FindBy(xpath="//div[@id='cart']/a[@class='link']")
     public WebElement enterToCart;
 

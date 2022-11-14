@@ -36,6 +36,9 @@ public class Application {
         productPage.open();
         productPage.products.get(0).click();
         int count = Integer.parseInt(cartElementBlock.countProducts.getText());
+        if (productPage.select.size() != 0) {
+            productPage.selectSize(productPage.select.get(0));
+        }
         productPage.addProduct.click();
         while (count != number + 1) {
             count = Integer.parseInt(cartElementBlock.countProducts.getText());
@@ -57,9 +60,10 @@ public class Application {
 
     public void removeAllProduct() {
         List<WebElement> listProducts = bucketPage.listProducts;
-        for (int i = 0; i < listProducts.size(); i++) {
-            listProducts.get(i).click();
+        while (bucketPage.listProducts.size() != 0) {
+            listProducts.get(0).click();
             bucketPage.removeOrder.click();
+            bucketPage.refreshBucket();
         }
     }
 }
