@@ -17,20 +17,21 @@ public class LoggingTest extends BaseTest {
         password.sendKeys("admin");
         WebElement login = driver.findElement(By.name("login"));
         login.click();
-        driver.navigate()
+        decorated.navigate()
                 .to("http://localhost:8055/litecart//admin?app=catalog&doc=catalog&category_id=1");
         int k = 0;
-        List<WebElement> elements = driver.findElements(
-                By.cssSelector("td[id=content] table.dataTable tr.row"));
-        for (int i = 1; i < elements.size(); i++) {
-            decorated.findElements(
-                    By.cssSelector(
-                            "td[id=content] table.dataTable tr.row a:nth-child(" + i + ")"));
+        List<WebElement> elementsList = decorated.findElements(
+                By.xpath("//td[@id='content']/form/table[@class='dataTable']/tbody/tr[@class='row']/td[3]/a"));
+        for (int i = 1; i < elementsList.size(); i++) {
+            List<WebElement> elements = decorated.findElements(
+                    By.xpath("//td[@id='content']/form/table[@class='dataTable']/tbody/tr[@class='row']/td[3]/a"));
+            elements.get(i).click();
             decorated.manage().logs().getAvailableLogTypes();
             List<LogEntry> logEntries = decorated.manage().logs().get("browser").getAll();
             if (logEntries.size() > 0) {
                 k++;
             }
+            decorated.navigate().back();
         }
         System.out.println(k);
     }
