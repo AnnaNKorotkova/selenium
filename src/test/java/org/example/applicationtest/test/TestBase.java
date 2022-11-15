@@ -1,14 +1,15 @@
 package org.example.applicationtest.test;
 
 import org.example.applicationtest.app.Application;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+
 
 public class TestBase {
 
     public static ThreadLocal<Application> tlApp = new ThreadLocal<>();
     public Application app;
 
-    @BeforeEach
+    @Before
     public void start() {
         if (tlApp.get() != null) {
             app = tlApp.get();

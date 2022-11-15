@@ -1,7 +1,8 @@
 package org.example.applicationtest.test;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BucketTest extends TestBase {
 
@@ -15,8 +16,8 @@ public class BucketTest extends TestBase {
         int checkElementAfterAdding = app.checkElementsIntoCart();
         app.enterToCart();
         app.removeAllProduct();
-        Assertions.assertEquals(0, checkElementBeforeAdding);
-        Assertions.assertEquals(3, checkElementAfterAdding);
-        Assertions.assertEquals(0,  app.getAllProductsIntoCart().size());
+        assertEquals(0, checkElementBeforeAdding);
+        assertEquals(3, checkElementAfterAdding);
+        assertEquals(0, app.getAllProductsIntoCart().size());
     }
 }
