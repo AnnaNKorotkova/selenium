@@ -11,7 +11,6 @@ public class CartElementBlock extends Page {
         super(driver);
         PageFactory.initElements(driver, this);
     }
-
     @FindBy(xpath = "//div[@id='cart']/a/span[@class='quantity']")
     public WebElement countProducts;
 }

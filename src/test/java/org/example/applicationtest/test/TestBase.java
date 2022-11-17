@@ -1,16 +1,16 @@
 package org.example.applicationtest.test;
 
 import org.example.applicationtest.app.Application;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 
 
 public class TestBase {
 
     public static ThreadLocal<Application> tlApp = new ThreadLocal<>();
-    public Application app;
+    public static Application app;
 
-    @Before
-    public void start() {
+    @BeforeAll
+    public static void start() {
         if (tlApp.get() != null) {
             app = tlApp.get();
             return;
@@ -20,7 +20,10 @@ public class TestBase {
         tlApp.set(app);
 
         Runtime.getRuntime().addShutdownHook(
-                new Thread(() -> { app.quit(); app = null; }));
+                new Thread(() -> {
+                    app.quit();
+                    app = null;
+                }));
     }
 
 }

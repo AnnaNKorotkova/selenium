@@ -21,13 +21,16 @@ public class BucketTest extends BaseTest {
 
         driver.findElement(
                 By.xpath("//div[@id='cart']/a[@class='link']")).click();
+        int size = driver.findElements(By.xpath("//ul[@class='shortcuts']/li/a")).size();
 
-        while (driver.findElements(By.xpath("//ul[@class='shortcuts']/li/a")).size() != 0) {
+        for (int i = 0; i < size; i++) {
             driver.findElement(By.xpath("//button[@name='remove_cart_item']")).click();
             driver.navigate().refresh();
         }
 
-        int afterDelete = driver.findElements(By.xpath("//ul[@class='shortcuts']/li/a")).size();
+        driver.navigate().back();
+        int afterDelete = Integer.parseInt(driver.findElement(
+                By.xpath("//div[@id='cart']/a/span[@class='quantity']")).getText());
         System.out.println(beforeDelete == 3);
         System.out.println(afterDelete == 0);
     }

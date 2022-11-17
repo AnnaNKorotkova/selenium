@@ -1,6 +1,6 @@
 package org.example.applicationtest.test;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
