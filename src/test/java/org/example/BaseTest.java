@@ -18,55 +18,59 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseTest {
 
-  public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
-  public WebDriver driver;
-  public WebDriver decorated;
-  public WebDriverWait wait;
+    public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
+    public WebDriver driver;
+    public WebDriver decorated;
+    public WebDriverWait wait;
 
-  @BeforeEach
-  public void start() {
+    @BeforeEach
+    public void start() {
 
-    if (tlDriver.get() != null) {
-      driver = tlDriver.get();
-      wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-      return;
-    }
-    ChromeOptions options = new ChromeOptions();
-    driver = new  ChromeDriver(options);
-    LoggingPreferences prefs = new LoggingPreferences();
-    prefs.enable("browser", Level.ALL);
-    decorated = new LoggingDecorator().decorate(driver);
+        if (tlDriver.get() != null) {
+            driver = tlDriver.get();
+            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            return;
+        }
+        ChromeOptions options = new ChromeOptions();
+        LoggingPreferences prefs = new LoggingPreferences();
+        prefs.enable("browser", Level.ALL);
+        decorated = new LoggingDecorator().decorate(driver);
+        driver = new ChromeDriver(options);
 
-    tlDriver.set(driver);
-    System.out.println(((HasCapabilities) driver).getCapabilities());
-    wait = new WebDriverWait(driver,  Duration.ofSeconds(10));
+        tlDriver.set(driver);
+        System.out.println(((HasCapabilities) driver).getCapabilities());
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    Runtime.getRuntime().addShutdownHook(
-        new Thread(() -> { driver.quit(); driver = null; }));
-  }
-
-  @AfterEach
-  public void stop() {
-    driver.quit();
-    driver = null;
-  }
-
-  public static class LoggingDecorator extends WebDriverDecorator {
-
-    @Override
-    public void beforeCall(Decorated target, Method method, Object[] args) {
-      System.out.println("before " +  target + " " + args );
-
-    }
-    @Override
-    public void afterCall(Decorated target, Method method, Object[] args, Object res) {
-      System.out.println("before " +  target + " " + args + " " + res);
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(() -> {
+                    driver.quit();
+                    driver = null;
+                }));
     }
 
-    @Override
-    public Object onError(Decorated target, Method method, Object[] args,
-            InvocationTargetException e) throws Throwable {
-      return super.onError(target, method, args, e);
+    @AfterEach
+    public void stop() {
+        driver.quit();
+        driver = null;
     }
-  }
+
+    public static class LoggingDecorator extends WebDriverDecorator {
+
+        @Override
+        public void beforeCall(Decorated target, Method method, Object[] args) {
+            System.out.println("before " + target + " " + args);
+
+        }
+
+        @Override
+        public void afterCall(Decorated target, Method method, Object[] args, Object res) {
+            System.out.println("before " + target + " " + args + " " + res);
+        }
+
+        @Override
+        public Object onError(Decorated target, Method method, Object[] args,
+                InvocationTargetException e) throws Throwable {
+            return super.onError(target, method, args, e);
+        }
+    }
 }
