@@ -16,7 +16,13 @@ public class CucumberBucketStep extends CucumberBaseTest implements En {
         When("^add product (\\d+)$", (Integer integer) -> {
             app.addFirstProductToCart(integer);
         });
-        And("^remove all element$", () -> {
+        When("enter to card", () -> {
+            app.enterToCart();
+        });
+        And("^checkout$", () -> {
+            app.enterToCart();
+        });
+        When("^remove all elements$", () -> {
             app.removeAllProduct();
         });
     }

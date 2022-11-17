@@ -13,4 +13,7 @@ public class CartElementBlock extends Page {
     }
     @FindBy(xpath = "//div[@id='cart']/a/span[@class='quantity']")
     public WebElement countProducts;
+
+    @FindBy(xpath = "//div[@id='cart']/a[@class='link']")
+    public WebElement chechout;
 }

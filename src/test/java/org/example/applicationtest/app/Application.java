@@ -40,7 +40,7 @@ public class Application {
             productPage.selectSize(productPage.select.get(0));
         }
         productPage.addProduct.click();
-        while (count != number + 1) {
+        while (count != number) {
             count = Integer.parseInt(cartElementBlock.countProducts.getText());
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         }
@@ -51,17 +51,13 @@ public class Application {
     }
 
     public void enterToCart() {
-        bucketPage.enterToCart.click();
-    }
-
-    public List<WebElement> getAllProductsIntoCart() {
-        return bucketPage.listProducts;
+        cartElementBlock.chechout.click();
     }
 
     public void removeAllProduct() {
         List<WebElement> listProducts = bucketPage.listProducts;
-        while (bucketPage.listProducts.size() != 0) {
-            listProducts.get(0).click();
+        int count = listProducts.size();
+        for (int i = 0; i < count; i++) {
             bucketPage.removeOrder.click();
             bucketPage.refreshBucket();
         }

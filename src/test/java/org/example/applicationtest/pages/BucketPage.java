@@ -16,8 +16,6 @@ public class BucketPage extends Page{
     public void refreshBucket() {
         driver.navigate().refresh();
     }
-    @FindBy(xpath="//div[@id='cart']/a[@class='link']")
-    public WebElement enterToCart;
 
     @FindBy(xpath="//button[@name='remove_cart_item']")
     public WebElement removeOrder;

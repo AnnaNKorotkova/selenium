@@ -7,8 +7,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"pretty"},
-        features = {"classpath:src/test/resource/feature/bucket.feature"},
-        glue = {"classpath:org.example.cucumber"})
+        features = {"classpath:feature/bucket.feature"})
 public class CucumberRunnerTest {
 
 }
